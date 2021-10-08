@@ -8,8 +8,9 @@ class EnumScore(Enum):
     # Enum que armazena os diferentes valores de pontuação
     FULL_MATCH = 10
     MATCH = 1
+    WANT_FEAT = 0
     NO_FEAT = 0
-    FEAT = -5
+    DONT_WANT_FEAT = -5
 
 
 class Musica:

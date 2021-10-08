@@ -116,9 +116,9 @@ def verifica_feat_strings(stringEntrada: str, stringMusica: str) -> int:
     # print(stringMusica, stringMusica in "feat")
     if stringMusica == "feat":
         if stringEntrada == "feat":
-            return EnumScore["NO_FEAT"].value
+            return EnumScore["WANT_FEAT"].value
         else:
-            return EnumScore["FEAT"].value
+            return EnumScore["DONT_WANT_FEAT"].value
     else:
         return EnumScore["NO_FEAT"].value
 
