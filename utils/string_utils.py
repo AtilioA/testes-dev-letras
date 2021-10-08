@@ -3,7 +3,7 @@ from main import EnumScore
 
 
 # Strings de músicas fornecidas pelo desafio
-stringsFixas = [
+stringsBanco = [
     "Que Tiro Foi Esse",
     "Deixe-me Ir",
     "Sobre Nós (Poesia Acústica #2)",
@@ -124,16 +124,17 @@ def compara_strings_ingenuo(s1: str, s2: str) -> int:
     # Comparamos até alguma das duas strings acabar
     lenComp = min(len(s1), len(s2))
 
-    for i in range(lenComp):
-        # Se alguma das duas tiver caractere igual na mesma posição
-        if s1[i] == s2[i]:
-            # Incrementa score com crédito de MATCH (no nosso caso específico, 1)
-            score += EnumScore["MATCH"].value
+    if s1 and s2:
+        for i in range(lenComp):
+            # Se alguma das duas tiver caractere igual na mesma posição
+            if s1[i] == s2[i]:
+                # Incrementa score com crédito de MATCH (no nosso caso específico, 1)
+                score += EnumScore["MATCH"].value
 
-    # Se conseguirmos corresponder toda a s2
-    if score == len(s2):
-        # Incrementa score com crédito de FULL_MATCH (no nosso caso específico, 10)
-        score += EnumScore["FULL_MATCH"].value
+        # Se conseguirmos corresponder toda a s2
+        if score == len(s2):
+            # Incrementa score com crédito de FULL_MATCH (no nosso caso específico, 10)
+            score += EnumScore["FULL_MATCH"].value
 
     return score
 

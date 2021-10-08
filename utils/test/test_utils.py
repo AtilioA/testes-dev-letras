@@ -7,10 +7,6 @@ from main import EnumScore
 
 
 class TestStringMethods(unittest.TestCase):
-    # def test_remove_acentos_string(self):
-    #     s1 = "1 - áéíóúÂÊÎÔÛãõÃÕ."
-    #     self.assertEqual(str_utils.remove_acentos_string(s1), "1 - aeiouAEIOUãõÃÕ.")
-
     def test_compara_strings_ingenuo(self):
         s1 = "havana"
         s2 = "havana"
@@ -71,6 +67,10 @@ class TestStringMethods(unittest.TestCase):
             EnumScore["MATCH"].value * 3 + EnumScore["FULL_MATCH"].value,
         )
 
+        s21 = ""
+        s22 = ""
+        self.assertEqual(str_utils.compara_strings_ingenuo(s21, s22), 0)
+
     def test_divide_string_por_espaco(self):
         s1 = ""
         self.assertEqual(str_utils.divide_string_por_espaco(s1), [""])
@@ -119,14 +119,22 @@ class TestStringMethods(unittest.TestCase):
         s4 = "#2"
         self.assertEqual(str_utils.trata_string(s4), "#2")
 
-        s5 = "'\"1234567890#_,.;[]\{\}()"
-        self.assertEqual(str_utils.trata_string(s5), "'\"1234567890#_,.;[]\{\}()")
+        s5 = "'\"1234567890#_,.;[]{{}}()"
+        self.assertEqual(str_utils.trata_string(s5), "'\"1234567890#_,.;[]{{}}()")
 
         s6 = "Moça"
         self.assertEqual(str_utils.trata_string(s6), "moça")
 
         s7 = "Oração"
         self.assertEqual(str_utils.trata_string(s7), "oração")
+
+        s8 = "aAàÀáÁâÂeEèÈéÉêÊiIìÌíÍîÎoOòÒóÓôÔuUùÙúÚûÛ"
+        self.assertEqual(
+            str_utils.trata_string(s8), "aaaaaaaaeeeeeeeeiiiiiiiioooooooouuuuuuuu"
+        )
+
+        s9 = ""
+        self.assertEqual(str_utils.trata_string(s9), "")
 
 
 if __name__ == "__main__":
