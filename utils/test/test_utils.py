@@ -81,6 +81,29 @@ class TestStringMethods(unittest.TestCase):
         s10M = "e"
         self.assertEqual(str_utils.verifica_feat_strings(s9E, s10M), EnumScore["NO_FEAT"].value)
 
+    def test_trata_string(self):
+        s1 = 'Pesadão'
+        self.assertEqual(str_utils.trata_string(s1), 'pesadão')
+
+        s2 = 'Café'
+        self.assertEqual(str_utils.trata_string(s2), 'cafe')
+
+        s3 = 'Acústica'
+        self.assertEqual(str_utils.trata_string(s3), 'acustica')
+
+        s4 = '#2'
+        self.assertEqual(str_utils.trata_string(s4), '#2')
+
+        s5 = '\'"1234567890#_,.;[]\{\}()'
+        self.assertEqual(str_utils.trata_string(s5), '\'"1234567890#_,.;[]\{\}()')
+
+        s6 = 'Moça'
+        self.assertEqual(str_utils.trata_string(s6), 'moça')
+
+        s7 = 'Oração'
+        self.assertEqual(str_utils.trata_string(s7), 'oração')
+
+
 
 if __name__ == "__main__":
     unittest.main()
