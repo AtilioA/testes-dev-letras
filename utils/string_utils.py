@@ -122,27 +122,8 @@ __accents_translation_table = str.maketrans(
 )
 
 
-def verifica_feat_strings(stringEntrada: str, stringMusica: str) -> int:
-    """
-    Determina se strings de entrada possuem 'feat' e retorna pontuação de acordo com lógica estabelecida pelo desafio
-    """
-
-    if stringMusica == "feat":
-        if stringEntrada == "feat":
-            # Usuário está procurando feat, não desconte ponto
-            return EnumScore["WANT_FEAT"].value
-        else:
-            # Usuário não está procurando feat (mas música possui 'feat'), desconte ponto
-            return EnumScore["DONT_WANT_FEAT"].value
-    else:
-        # Não há feat, não desconte ponto
-        return EnumScore["NO_FEAT"].value
-
-
 def compara_strings_ingenuo(s1: str, s2: str) -> int:
-    """
-    Compara duas strings e calcula pontuação de acordo com regras do teste
-    """
+    """ Compara duas strings e calcula pontuação de acordo com regras do teste. """
 
     score = 0
     # Comparamos até alguma das duas strings acabar
@@ -163,24 +144,19 @@ def compara_strings_ingenuo(s1: str, s2: str) -> int:
 
 
 def divide_string_por_espaco(string: str) -> list[str]:
-    """
-    Divide uma string em seus espaços em branco, retornando lista de strings
-    """
+    """ Divide uma string em seus espaços em branco, retornando lista de strings. """
 
     return string.split(" ")
 
 
 def trata_string(string: str) -> str:
-    """
-    Torna string minúscula e remove acentos
-    """
+    """ Torna string minúscula e remove acentos. """
 
     string = remove_acentos_string(string.lower())
     return string
 
+
 def remove_acentos_string(string: str) -> str:
-    """
-    Remove apenas acentos de uma string (por ex.: não remove til)
-    """
+    """ Remove apenas acentos de uma string (por ex.: não remove til). """
 
     return string.translate(__accents_translation_table)

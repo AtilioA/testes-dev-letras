@@ -14,11 +14,17 @@ class TestStringMethods(unittest.TestCase):
     def test_compara_strings_ingenuo(self):
         s1 = "havana"
         s2 = "havana"
-        self.assertEqual(str_utils.compara_strings_ingenuo(s1, s2), EnumScore['MATCH'].value * len(s1) + EnumScore['FULL_MATCH'].value)
+        self.assertEqual(
+            str_utils.compara_strings_ingenuo(s1, s2),
+            EnumScore["MATCH"].value * len(s1) + EnumScore["FULL_MATCH"].value,
+        )
 
         s3 = "malandr"
         s4 = "malandra"
-        self.assertEqual(str_utils.compara_strings_ingenuo(s3, s4), EnumScore['MATCH'].value * len(s3))
+        self.assertEqual(
+            str_utils.compara_strings_ingenuo(s3, s4),
+            EnumScore["MATCH"].value * len(s3),
+        )
 
         s5 = "part"
         s6 = "(part."
@@ -26,7 +32,9 @@ class TestStringMethods(unittest.TestCase):
 
         s7 = "Fala"
         s8 = "Fica"
-        self.assertEqual(str_utils.compara_strings_ingenuo(s7, s8), EnumScore['MATCH'].value * 2)
+        self.assertEqual(
+            str_utils.compara_strings_ingenuo(s7, s8), EnumScore["MATCH"].value * 2
+        )
 
         s9 = "Fala"
         s10 = "Tranquilo"
@@ -38,7 +46,9 @@ class TestStringMethods(unittest.TestCase):
 
         s13 = "Feat"
         s14 = "Featuring"
-        self.assertEqual(str_utils.compara_strings_ingenuo(s13, s14), EnumScore['MATCH'].value * 4)
+        self.assertEqual(
+            str_utils.compara_strings_ingenuo(s13, s14), EnumScore["MATCH"].value * 4
+        )
 
         s15 = "feat"
         s16 = "(feat)"
@@ -50,59 +60,73 @@ class TestStringMethods(unittest.TestCase):
 
         s17 = "Era"
         s18 = "Eu"
-        self.assertEqual(str_utils.compara_strings_ingenuo(s17, s18), EnumScore['MATCH'].value * 1)
+        self.assertEqual(
+            str_utils.compara_strings_ingenuo(s17, s18), EnumScore["MATCH"].value * 1
+        )
 
         s19 = "era"
         s20 = "era"
-        self.assertEqual(str_utils.compara_strings_ingenuo(s19, s20), EnumScore['MATCH'].value * 3 + EnumScore['FULL_MATCH'].value)
+        self.assertEqual(
+            str_utils.compara_strings_ingenuo(s19, s20),
+            EnumScore["MATCH"].value * 3 + EnumScore["FULL_MATCH"].value,
+        )
 
     def test_divide_string_por_espaco(self):
         s1 = ""
-        self.assertEqual(str_utils.divide_string_por_espaco(s1), [''])
+        self.assertEqual(str_utils.divide_string_por_espaco(s1), [""])
         s2 = "a"
-        self.assertEqual(str_utils.divide_string_por_espaco(s2), ['a'])
+        self.assertEqual(str_utils.divide_string_por_espaco(s2), ["a"])
         s3 = "a bc def"
-        self.assertEqual(str_utils.divide_string_por_espaco(s3), ['a', 'bc', 'def'])
+        self.assertEqual(str_utils.divide_string_por_espaco(s3), ["a", "bc", "def"])
 
-    def test_verifica_feat_strings(self):
-        s1E = "feat"
-        s2M = "feat"
-        self.assertEqual(str_utils.verifica_feat_strings(s1E, s2M), EnumScore["WANT_FEAT"].value)
-        s3E = ""
-        s4M = "feat"
-        self.assertEqual(str_utils.verifica_feat_strings(s3E, s4M), EnumScore["DONT_WANT_FEAT"].value)
-        s5E = ""
-        s6M = ""
-        self.assertEqual(str_utils.verifica_feat_strings(s5E, s6M), EnumScore["NO_FEAT"].value)
-        s7E = "e"
-        s8M = "feat"
-        self.assertEqual(str_utils.verifica_feat_strings(s7E, s8M), EnumScore["DONT_WANT_FEAT"].value)
-        s9E = "e"
-        s10M = "e"
-        self.assertEqual(str_utils.verifica_feat_strings(s9E, s10M), EnumScore["NO_FEAT"].value)
+    # def test_verifica_feat_strings(self):
+    #     s1E = "feat"
+    #     s2M = "feat"
+    #     self.assertEqual(
+    #         str_utils.verifica_feat_strings(s1E, s2M), EnumScore["WANT_FEAT"].value
+    #     )
+    #     s3E = ""
+    #     s4M = "feat"
+    #     self.assertEqual(
+    #         str_utils.verifica_feat_strings(s3E, s4M), EnumScore["DONT_WANT_FEAT"].value
+    #     )
+    #     s5E = ""
+    #     s6M = ""
+    #     self.assertEqual(
+    #         str_utils.verifica_feat_strings(s5E, s6M), EnumScore["NO_FEAT"].value
+    #     )
+    #     s7E = "e"
+    #     s8M = "feat"
+    #     self.assertEqual(
+    #         str_utils.verifica_feat_strings(s7E, s8M), EnumScore["DONT_WANT_FEAT"].value
+    #     )
+    #     s9E = "e"
+    #     s10M = "e"
+    #     self.assertEqual(
+    #         str_utils.verifica_feat_strings(s9E, s10M), EnumScore["NO_FEAT"].value
+    #     )
 
     def test_trata_string(self):
-        s1 = 'Pesadão'
-        self.assertEqual(str_utils.trata_string(s1), 'pesadão')
+        s1 = "Pesadão"
+        self.assertEqual(str_utils.trata_string(s1), "pesadão")
 
-        s2 = 'Café'
-        self.assertEqual(str_utils.trata_string(s2), 'cafe')
+        s2 = "Café"
+        self.assertEqual(str_utils.trata_string(s2), "cafe")
 
-        s3 = 'Acústica'
-        self.assertEqual(str_utils.trata_string(s3), 'acustica')
+        s3 = "Acústica"
+        self.assertEqual(str_utils.trata_string(s3), "acustica")
 
-        s4 = '#2'
-        self.assertEqual(str_utils.trata_string(s4), '#2')
+        s4 = "#2"
+        self.assertEqual(str_utils.trata_string(s4), "#2")
 
-        s5 = '\'"1234567890#_,.;[]\{\}()'
-        self.assertEqual(str_utils.trata_string(s5), '\'"1234567890#_,.;[]\{\}()')
+        s5 = "'\"1234567890#_,.;[]\{\}()"
+        self.assertEqual(str_utils.trata_string(s5), "'\"1234567890#_,.;[]\{\}()")
 
-        s6 = 'Moça'
-        self.assertEqual(str_utils.trata_string(s6), 'moça')
+        s6 = "Moça"
+        self.assertEqual(str_utils.trata_string(s6), "moça")
 
-        s7 = 'Oração'
-        self.assertEqual(str_utils.trata_string(s7), 'oração')
-
+        s7 = "Oração"
+        self.assertEqual(str_utils.trata_string(s7), "oração")
 
 
 if __name__ == "__main__":
