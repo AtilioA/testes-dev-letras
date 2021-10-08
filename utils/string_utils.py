@@ -107,11 +107,11 @@ stringsBanco = [
     "Rabiola",
     "Paraíso (part. Pabllo Vittar)",
     "Vem Pra Minha Vida",
-] * 1
+]
 
 
 # Tabela de 'tradução' para remover acentos.
-# Como cedilha (e também trema) não são acentos (apenas sinais diacríticos), não estão incluídos aqui
+# Como cedilha (e também trema) não são acentos (apenas sinais diacríticos), não os incluí aqui
 __accents_translation_table = str.maketrans(
     "áéíóúýàèìòùỳâêîôûŷÁÉÍÓÚÝÀÈÌÒÙỲÂÊÎÔÛŶ", "aeiouyaeiouyaeiouyAEIOUYAEIOUYAEIOUY"
 )

@@ -36,7 +36,7 @@ class Musica:
         # Caso nenhuma palavra da música seja 'feat'
         return self.set_feat(False)
 
-    def pontua_feat(self, stringBusca) -> None:
+    def pontua_feat(self, stringBusca: str) -> None:
         """Determina se string de entrada possui 'feat' e retorna pontuação de acordo com lógica estabelecida pelo desafio para a música em questão."""
 
         if self.tem_feat():
@@ -75,21 +75,17 @@ class Musica:
         return self.temFeat
 
 
-if __name__ == "__main__":
-    # Número de músicas a serem exibidas no ranking
-    TOP_N_MUSICAS = 10
-
-    # Lê da entrada e trata string para ignorar capitalização e acentos
-    stringEntrada = str_utils.trata_string(str(input("# Digite sua busca: ").strip()))
-    print("#")
+def busca_musicas(stringBusca: str, stringsMusicas: list[str]) -> list[Musica]:
+    # Trata string de busca para ignorar capitalização e acentos
+    stringBusca = str_utils.trata_string(str(stringBusca).strip())
 
     # Divide string de entrada para comparar palavra por palavra
-    stringEntradaDividida: list[str] = stringEntrada.split()
-
+    stringBuscaDividida: list[str] = stringBusca.split()
+    # Lista de objetos Musica para armazenar objetos com o score devidamente computado
     musicas: list[Musica] = []
 
     # Trata strings do banco de músicas da mesma forma que a da entrada
-    stringsBancoTratadas = map(str_utils.trata_string, str_utils.stringsBanco)
+    stringsBancoTratadas = map(str_utils.trata_string, stringsMusicas)
     # Divide títulos das músicas por espaços para comparar palavra por palavra
     stringsBancoDivididas: list[list[str]] = list(
         map(str_utils.divide_string_por_espaco, stringsBancoTratadas)
@@ -100,10 +96,10 @@ if __name__ == "__main__":
         # Cria objeto Musica para cada música, salvando o título original do vetor de strings do banco
         # Aqui deve-se haver cuidado para não realizar cópia e utilizar memória descenessariamente
         # Como strings são imutáveis em Python e não pretendemos alterar esta string, o seguinte custa pouca memória:
-        objMusica = Musica(titulo, str_utils.stringsBanco[indice])
+        objMusica = Musica(titulo, stringsMusicas[indice])
 
         # Compara cada palavra de entrada
-        for palavraEntrada in stringEntradaDividida:
+        for palavraEntrada in stringBuscaDividida:
             # Com cada palavra do objeto Musica recém criado
             for palavraMusica in objMusica.get_titulo():
                 # Adiciona pontos de acordo com as correspondências
@@ -117,6 +113,18 @@ if __name__ == "__main__":
         # Adiciona o objeto Musica, agora com pontuação correta, a um vetor
         musicas.append(objMusica)
 
+    return musicas
+
+
+if __name__ == "__main__":
+    # Número de músicas a serem exibidas no ranking
+    TOP_N_MUSICAS = 10
+
+    # Lê string de busca da entrada
+    stringEntrada = input("# Digite sua busca: ")
+    print("#")
+
+    musicas = busca_musicas(stringEntrada, str_utils.stringsBanco)
     print("# Resultados:")
 
     # Ordena músicas por score (decrescente, desempate não importa)
