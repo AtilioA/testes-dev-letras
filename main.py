@@ -40,7 +40,7 @@ class Musica:
         """Determina se string de entrada possui 'feat' e retorna pontuação de acordo com lógica estabelecida pelo desafio para a música em questão."""
 
         if self.tem_feat():
-            if stringEntrada == "feat":
+            if stringBusca == "feat":
                 # Usuário está procurando feat, não desconte ponto
                 return self.adiciona_score(EnumScore["WANT_FEAT"].value)
             else:
@@ -79,12 +79,12 @@ def busca_musicas(stringBusca: str, stringsMusicas: list[str]) -> list[Musica]:
     # Trata string de busca para ignorar capitalização e acentos
     stringBusca = str_utils.trata_string(str(stringBusca).strip())
 
-    # Divide string de entrada para comparar palavra por palavra
+    # Divide string de busca para comparar palavra por palavra
     stringBuscaDividida: list[str] = stringBusca.split()
     # Lista de objetos Musica para armazenar objetos com o score devidamente computado
     musicas: list[Musica] = []
 
-    # Trata strings do banco de músicas da mesma forma que a da entrada
+    # Trata strings do banco de músicas da mesma forma que a da busca
     stringsBancoTratadas = map(str_utils.trata_string, stringsMusicas)
     # Divide títulos das músicas por espaços para comparar palavra por palavra
     stringsBancoDivididas: list[list[str]] = list(
@@ -98,17 +98,17 @@ def busca_musicas(stringBusca: str, stringsMusicas: list[str]) -> list[Musica]:
         # Como strings são imutáveis em Python e não pretendemos alterar esta string, o seguinte custa pouca memória:
         objMusica = Musica(titulo, stringsMusicas[indice])
 
-        # Compara cada palavra de entrada
-        for palavraEntrada in stringBuscaDividida:
+        # Compara cada palavra de busca
+        for palavraBusca in stringBuscaDividida:
             # Com cada palavra do objeto Musica recém criado
             for palavraMusica in objMusica.get_titulo():
                 # Adiciona pontos de acordo com as correspondências
                 objMusica.adiciona_score(
-                    str_utils.compara_strings_ingenuo(palavraEntrada, palavraMusica)
+                    str_utils.compara_strings_ingenuo(palavraBusca, palavraMusica)
                 )
 
             # Retira pontos caso apenas a música possua a palavra 'feat'
-            objMusica.pontua_feat(palavraEntrada)
+            objMusica.pontua_feat(palavraBusca)
 
         # Adiciona o objeto Musica, agora com pontuação correta, a um vetor
         musicas.append(objMusica)
