@@ -2,9 +2,11 @@ import sys
 import re
 import unicodedata
 
+# Importa enum com valores de crédito/débito de pontuação de acordo com correspondências em strings
 from main import EnumScore
 
 
+# Strings de músicas fornecidas pelo desafio
 stringsFixas = [
     "Que Tiro Foi Esse",
     "Deixe-me Ir",
@@ -112,51 +114,73 @@ stringsFixas = [
 ] * 1
 
 
+# Tabela de 'tradução' para remover acentos.
+# Como cedilha (e também trema) não são acentos (apenas sinais diacríticos), não estão incluídos aqui
+__accents_translation_table = str.maketrans(
+    "áéíóúýàèìòùỳâêîôûŷÁÉÍÓÚÝÀÈÌÒÙỲÂÊÎÔÛŶ",
+    "aeiouyaeiouyaeiouyAEIOUYAEIOUYAEIOUY"
+)
+
+
 def verifica_feat_strings(stringEntrada: str, stringMusica: str) -> int:
-    # print(stringMusica, stringMusica in "feat")
+    """
+    Determina se strings de entrada possuem 'feat' e retorna pontuação de acordo com lógica estabelecida pelo desafio
+    """
+
     if stringMusica == "feat":
         if stringEntrada == "feat":
+            # Usuário está procurando feat, não desconte ponto
             return EnumScore["WANT_FEAT"].value
         else:
+            # Usuário não está procurando feat (mas música possui 'feat'), desconte ponto
             return EnumScore["DONT_WANT_FEAT"].value
     else:
+        # Não há feat, não desconte ponto
         return EnumScore["NO_FEAT"].value
 
 
-# Compara duas strings e calcula pontuação de acordo com regras do teste
 def compara_strings_ingenuo(s1: str, s2: str) -> int:
+    """
+    Compara duas strings e calcula pontuação de acordo com regras do teste
+    """
+
     score = 0
+    # Comparamos até alguma das duas strings acabar
     lenComp = min(len(s1), len(s2))
 
     for i in range(lenComp):
+        # Se alguma das duas tiver caractere igual na mesma posição
         if s1[i] == s2[i]:
-            # print(s1[:i], s1[i], s2[:i], s2[i])
+            # Incrementa score com crédito de MATCH (no nosso caso específico, 1)
             score += EnumScore["MATCH"].value
 
-    if score == len(s2):  # Conseguimos corresponder toda a s2
+    # Se conseguirmos corresponder toda a s2
+    if score == len(s2):
+        # Incrementa score com crédito de FULL_MATCH (no nosso caso específico, 10)
         score += EnumScore["FULL_MATCH"].value
 
     return score
 
 
 def divide_string_por_espaco(string: str) -> list[str]:
+    """
+    Divide uma string em seus espaços em branco, retornando lista de strings
+    """
+
     return string.split(" ")
 
 
-# Remove acentos de uma string e torna-a minúscula
 def trata_string(string: str) -> str:
-    string = remove_acentos_string(string)
-    return string.lower()
+    """
+    Torna string minúscula e remove acentos
+    """
 
+    string = remove_acentos_string(string.lower())
+    return string
 
-# Remove apenas acentos de uma string (por ex.: não remove til)
 def remove_acentos_string(string: str) -> str:
-    # Normaliza string, separando caracteres especiais das letras
-    stringNormalizada = unicodedata.normalize("NFKD", string)
-    # Codifica em ASCII para remover caracteres especiais (fora do ASCII), agora separados, e ignora erros
-    stringASCII = stringNormalizada.encode("ASCII", "ignore")
-    # Decodifica de ASCII para a codificação padrão de str
-    stringTratada = stringASCII.decode("ASCII")
-    # Retorna a string, com todas as letras minúsculas
-    # stringSemAcentos = re.sub(r'[áéíóúÁÉÍÓÚâêîôÂÊÎÔçÇ]', '', string)
-    return stringTratada.lower()
+    """
+    Remove apenas acentos de uma string (por ex.: não remove til)
+    """
+
+    return string.translate(__accents_translation_table)
