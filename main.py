@@ -1,4 +1,3 @@
-# from pprint import pprint
 from enum import Enum
 
 import utils.string_utils as str_utils
@@ -17,11 +16,11 @@ class EnumScore(Enum):
 class Musica:
     """Classe que abstrai uma música do banco de músicas."""
 
-    def __init__(self, titulo: list[str], indiceOriginal: int) -> None:
+    def __init__(self, titulo: list[str], tituloOriginal: str) -> None:
         # Título da música
         self.titulo: list[str] = titulo
         # Índice no vetor original de músicas
-        self.indiceOriginal: int = indiceOriginal
+        self.tituloOriginal: str = tituloOriginal
         # Pontuação da música para a busca atual
         self.score: int = 0
         # Booleano representando caso a música tenha feat
@@ -89,33 +88,42 @@ if __name__ == "__main__":
 
     musicas: list[Musica] = []
 
-    # Trata strings do fixas/banco de dados da mesma forma que a da entrada
-    stringsFixasTratadas = map(str_utils.trata_string, str_utils.stringsFixas)
+    # Trata strings do banco de músicas da mesma forma que a da entrada
+    stringsBancoTratadas = map(str_utils.trata_string, str_utils.stringsBanco)
     # Divide títulos das músicas por espaços para comparar palavra por palavra
-    stringsFixasDivididas: list[list[str]] = list(
-        map(str_utils.divide_string_por_espaco, stringsFixasTratadas)
+    stringsBancoDivididas: list[list[str]] = list(
+        map(str_utils.divide_string_por_espaco, stringsBancoTratadas)
     )
 
-    for indice, titulo in enumerate(stringsFixasDivididas):
-        objMusica = Musica(titulo, indice)
+    # Percorre todas as músicas do banco de músicas
+    for indice, titulo in enumerate(stringsBancoDivididas):
+        # Cria objeto Musica para cada música, salvando o título original do vetor de strings do banco
+        # Aqui deve-se haver cuidado para não realizar cópia e utilizar memória descenessariamente
+        # Como strings são imutáveis em Python e não pretendemos alterar esta string, o seguinte custa pouca memória:
+        objMusica = Musica(titulo, str_utils.stringsBanco[indice])
+
+        # Compara cada palavra de entrada
         for palavraEntrada in stringEntradaDividida:
+            # Com cada palavra do objeto Musica recém criado
             for palavraMusica in objMusica.get_titulo():
-                # print(palavraMusica)
+                # Adiciona pontos de acordo com as correspondências
                 objMusica.adiciona_score(
                     str_utils.compara_strings_ingenuo(palavraEntrada, palavraMusica)
                 )
 
+            # Retira pontos caso apenas a música possua a palavra 'feat'
             objMusica.pontua_feat(palavraEntrada)
+
+        # Adiciona o objeto Musica, agora com pontuação correta, a um vetor
         musicas.append(objMusica)
 
     print("# Resultados:")
 
-    # Top músicas por score (decrescente, desempate não importa)
-    musicas.sort(key=lambda x: x.score, reverse=True)
+    # Ordena músicas por score (decrescente, desempate não importa)
+    musicas.sort(key=lambda musica: musica.score, reverse=True)
 
+    # Percorre imprimindo até TOP_N_MUSICAS, neste caso 10
     for musica in musicas[:TOP_N_MUSICAS]:
-        print(
-            f"# {musica.score} pontos, {str_utils.stringsFixas[musica.indiceOriginal]}"
-        )
+        print(f"# {musica.score} pontos, {musica.tituloOriginal}")
     print("#")
     print("# {}".format("-" * 37))
