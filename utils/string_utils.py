@@ -1,5 +1,5 @@
 # Importa enum com valores de crédito/débito de pontuação de acordo com correspondências em strings
-from main import EnumScore
+import main
 
 
 # Strings de músicas fornecidas pelo desafio
@@ -129,12 +129,12 @@ def compara_strings_ingenuo(s1: str, s2: str) -> int:
             # Se alguma das duas tiver caractere igual na mesma posição
             if s1[i] == s2[i]:
                 # Incrementa score com crédito de MATCH (no nosso caso específico, 1)
-                score += EnumScore["MATCH"].value
+                score += main.EnumScore["MATCH"].value
 
         # Se conseguirmos corresponder toda a s2
         if score == len(s2):
             # Incrementa score com crédito de FULL_MATCH (no nosso caso específico, 10)
-            score += EnumScore["FULL_MATCH"].value
+            score += main.EnumScore["FULL_MATCH"].value
 
     return score
 

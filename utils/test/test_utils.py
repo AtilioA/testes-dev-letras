@@ -1,9 +1,11 @@
-import sys
 import unittest
 
+import sys
 
+sys.path.append(sys.path[0] + "/../")
+
+import main
 import utils.string_utils as str_utils
-from main import EnumScore
 
 
 class TestStringMethods(unittest.TestCase):
@@ -12,14 +14,15 @@ class TestStringMethods(unittest.TestCase):
         s2 = "havana"
         self.assertEqual(
             str_utils.compara_strings_ingenuo(s1, s2),
-            EnumScore["MATCH"].value * len(s1) + EnumScore["FULL_MATCH"].value,
+            main.EnumScore["MATCH"].value * len(s1)
+            + main.EnumScore["FULL_MATCH"].value,
         )
 
         s3 = "malandr"
         s4 = "malandra"
         self.assertEqual(
             str_utils.compara_strings_ingenuo(s3, s4),
-            EnumScore["MATCH"].value * len(s3),
+            main.EnumScore["MATCH"].value * len(s3),
         )
 
         s5 = "part"
@@ -29,7 +32,7 @@ class TestStringMethods(unittest.TestCase):
         s7 = "Fala"
         s8 = "Fica"
         self.assertEqual(
-            str_utils.compara_strings_ingenuo(s7, s8), EnumScore["MATCH"].value * 2
+            str_utils.compara_strings_ingenuo(s7, s8), main.EnumScore["MATCH"].value * 2
         )
 
         s9 = "Fala"
@@ -43,7 +46,8 @@ class TestStringMethods(unittest.TestCase):
         s13 = "Feat"
         s14 = "Featuring"
         self.assertEqual(
-            str_utils.compara_strings_ingenuo(s13, s14), EnumScore["MATCH"].value * 4
+            str_utils.compara_strings_ingenuo(s13, s14),
+            main.EnumScore["MATCH"].value * 4,
         )
 
         s15 = "feat"
@@ -57,14 +61,15 @@ class TestStringMethods(unittest.TestCase):
         s17 = "Era"
         s18 = "Eu"
         self.assertEqual(
-            str_utils.compara_strings_ingenuo(s17, s18), EnumScore["MATCH"].value * 1
+            str_utils.compara_strings_ingenuo(s17, s18),
+            main.EnumScore["MATCH"].value * 1,
         )
 
         s19 = "era"
         s20 = "era"
         self.assertEqual(
             str_utils.compara_strings_ingenuo(s19, s20),
-            EnumScore["MATCH"].value * 3 + EnumScore["FULL_MATCH"].value,
+            main.EnumScore["MATCH"].value * 3 + main.EnumScore["FULL_MATCH"].value,
         )
 
         s21 = ""
@@ -83,27 +88,27 @@ class TestStringMethods(unittest.TestCase):
     #     s1E = "feat"
     #     s2M = "feat"
     #     self.assertEqual(
-    #         str_utils.verifica_feat_strings(s1E, s2M), EnumScore["WANT_FEAT"].value
+    #         str_utils.verifica_feat_strings(s1E, s2M), main.EnumScore["WANT_FEAT"].value
     #     )
     #     s3E = ""
     #     s4M = "feat"
     #     self.assertEqual(
-    #         str_utils.verifica_feat_strings(s3E, s4M), EnumScore["DONT_WANT_FEAT"].value
+    #         str_utils.verifica_feat_strings(s3E, s4M), main.EnumScore["DONT_WANT_FEAT"].value
     #     )
     #     s5E = ""
     #     s6M = ""
     #     self.assertEqual(
-    #         str_utils.verifica_feat_strings(s5E, s6M), EnumScore["NO_FEAT"].value
+    #         str_utils.verifica_feat_strings(s5E, s6M), main.EnumScore["NO_FEAT"].value
     #     )
     #     s7E = "e"
     #     s8M = "feat"
     #     self.assertEqual(
-    #         str_utils.verifica_feat_strings(s7E, s8M), EnumScore["DONT_WANT_FEAT"].value
+    #         str_utils.verifica_feat_strings(s7E, s8M), main.EnumScore["DONT_WANT_FEAT"].value
     #     )
     #     s9E = "e"
     #     s10M = "e"
     #     self.assertEqual(
-    #         str_utils.verifica_feat_strings(s9E, s10M), EnumScore["NO_FEAT"].value
+    #         str_utils.verifica_feat_strings(s9E, s10M), main.EnumScore["NO_FEAT"].value
     #     )
 
     def test_trata_string(self):

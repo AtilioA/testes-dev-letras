@@ -1,7 +1,6 @@
 from enum import Enum
 
-import utils.string_utils as str_utils
-
+import trie.trienode as trie
 
 class EnumScore(Enum):
     """Enum que armazena os diferentes valores de pontuação."""
@@ -12,6 +11,8 @@ class EnumScore(Enum):
     NO_FEAT = 0
     DONT_WANT_FEAT = -5
 
+
+import utils.string_utils as str_utils
 
 class Musica:
     """Classe que abstrai uma música do banco de músicas."""
@@ -52,7 +53,7 @@ class Musica:
 
     def __str__(self) -> str:
         """Representação em string do objeto Música, imprimindo título, índice e score."""
-        return f"m:{self.titulo}|i:{self.indiceOriginal}|{self.score} pontos"
+        return f"{self.tituloOriginal}|{self.score} pontos"
 
     def adiciona_score(self, delta: int) -> None:
         """Soma um valor ao score de um objeto Musica."""
