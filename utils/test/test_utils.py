@@ -8,7 +8,7 @@ import main
 import utils.string_utils as str_utils
 
 
-class TestStringMethods(unittest.TestCase):
+class TestStringFunctions(unittest.TestCase):
     def test_compara_strings_ingenuo(self):
         s1 = "havana"
         s2 = "havana"
@@ -83,33 +83,6 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(str_utils.divide_string_por_espaco(s2), ["a"])
         s3 = "a bc def"
         self.assertEqual(str_utils.divide_string_por_espaco(s3), ["a", "bc", "def"])
-
-    # def test_verifica_feat_strings(self):
-    #     s1E = "feat"
-    #     s2M = "feat"
-    #     self.assertEqual(
-    #         str_utils.verifica_feat_strings(s1E, s2M), main.EnumScore["WANT_FEAT"].value
-    #     )
-    #     s3E = ""
-    #     s4M = "feat"
-    #     self.assertEqual(
-    #         str_utils.verifica_feat_strings(s3E, s4M), main.EnumScore["DONT_WANT_FEAT"].value
-    #     )
-    #     s5E = ""
-    #     s6M = ""
-    #     self.assertEqual(
-    #         str_utils.verifica_feat_strings(s5E, s6M), main.EnumScore["NO_FEAT"].value
-    #     )
-    #     s7E = "e"
-    #     s8M = "feat"
-    #     self.assertEqual(
-    #         str_utils.verifica_feat_strings(s7E, s8M), main.EnumScore["DONT_WANT_FEAT"].value
-    #     )
-    #     s9E = "e"
-    #     s10M = "e"
-    #     self.assertEqual(
-    #         str_utils.verifica_feat_strings(s9E, s10M), main.EnumScore["NO_FEAT"].value
-    #     )
 
     def test_trata_string(self):
         s1 = "Pesadão"

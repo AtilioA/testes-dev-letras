@@ -5,6 +5,7 @@ import sys
 sys.path.append(sys.path[0] + "/../../")
 import main
 import trie.trienode as trie
+import utils.string_utils as str_utils
 
 
 class TestTrieMethods(unittest.TestCase):
@@ -45,7 +46,9 @@ class TestTrieMethods(unittest.TestCase):
         )
 
     def test_busca(self):
-        titulo1 = "ceci n'est pas une pipe".split()
+        titulo1 = str_utils.divide_string_por_espaco(
+            str_utils.trata_string("ceci n'est pas une pipe")
+        )
         m1 = main.Musica(titulo1, "tituloOriginal")
         raiz = trie.TrieNode()
         for palavra in titulo1:
@@ -56,7 +59,9 @@ class TestTrieMethods(unittest.TestCase):
         self.assertEqual(raiz.busca("une")[0], m1)
         self.assertEqual(raiz.busca("pipe")[0], m1)
 
-        titulo2 = "ceci est une pipe".split()
+        titulo2 = str_utils.divide_string_por_espaco(
+            str_utils.trata_string("ceci est une pipe")
+        )
         m2 = main.Musica(titulo2, "tituloOriginal2")
         for palavra in titulo2:
             raiz.insere(palavra, m2)
@@ -72,16 +77,57 @@ class TestTrieMethods(unittest.TestCase):
         raiz = trie.TrieNode()
         musicas = []
 
-        titulo = "ceci n'est pas une pipe".split()
+        titulo = str_utils.divide_string_por_espaco(
+            str_utils.trata_string("ceci n'est pas une pipe")
+        )
         musicas.append(main.Musica(titulo, "tituloOriginal"))
-        titulo = "ceci est une pipe".split()
+        titulo = str_utils.divide_string_por_espaco(
+            str_utils.trata_string("ceci est une pipe")
+        )
         musicas.append(main.Musica(titulo, "tituloOriginal"))
-        titulo = "celine dion | my heart will go on".split()
+        titulo = str_utils.divide_string_por_espaco(
+            str_utils.trata_string("celine dion | my heart will go on")
+        )
         musicas.append(main.Musica(titulo, "tituloOriginal"))
 
         raiz.popula_trie_musicas(musicas)
         self.assertEqual(raiz.busca("ceci"), [musicas[0], musicas[1]])
         self.assertEqual(raiz.busca("celine"), [musicas[2]])
+
+    def test_marca_feats(self):
+        musicas = []
+        titulo1 = str_utils.divide_string_por_espaco(
+            str_utils.trata_string("featuring (feat)")
+        )
+        musicas.append(main.Musica(titulo1, "tituloOriginal"))
+        titulo2 = str_utils.divide_string_por_espaco(
+            str_utils.trata_string("rockstar feat 21")
+        )
+        musicas.append(main.Musica(titulo2, "tituloOriginal"))
+        titulo3 = str_utils.divide_string_por_espaco(
+            str_utils.trata_string("featuring")
+        )
+        musicas.append(main.Musica(titulo3, "tituloOriginal"))
+        titulo4 = str_utils.divide_string_por_espaco(str_utils.trata_string("f"))
+        musicas.append(main.Musica(titulo4, "tituloOriginal"))
+        titulo5 = str_utils.divide_string_por_espaco(str_utils.trata_string("fe"))
+        musicas.append(main.Musica(titulo5, "tituloOriginal"))
+        titulo6 = str_utils.divide_string_por_espaco(str_utils.trata_string("fea"))
+        musicas.append(main.Musica(titulo6, "tituloOriginal"))
+        titulo7 = str_utils.divide_string_por_espaco(str_utils.trata_string("feat"))
+        musicas.append(main.Musica(titulo7, "tituloOriginal"))
+
+        raiz = trie.TrieNode()
+        raiz.popula_trie_musicas(musicas)
+        raiz.marca_feats()
+
+        self.assertFalse(musicas[0].tem_feat())
+        self.assertTrue(musicas[1].tem_feat())
+        self.assertFalse(musicas[2].tem_feat())
+        self.assertFalse(musicas[3].tem_feat())
+        self.assertFalse(musicas[4].tem_feat())
+        self.assertFalse(musicas[5].tem_feat())
+        self.assertTrue(musicas[6].tem_feat())
 
 
 if __name__ == "__main__":
