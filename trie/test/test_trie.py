@@ -7,7 +7,7 @@ import main
 import trie.trienode as trie
 
 
-class TestStringMethods(unittest.TestCase):
+class TestTrieMethods(unittest.TestCase):
     def test_insere(self):
         m1 = main.Musica("titulo", "tituloOriginal")
         raiz = trie.TrieNode()
