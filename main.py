@@ -72,7 +72,7 @@ class Musica:
         return self.temFeat
 
 
-def cria_objs_musica(musicas: list[list[str]]):
+def cria_objs_musica(musicas: list[list[str]], stringsBanco: list[str]):
     """Cria um objeto Musica para cada lista de string da lista dada como entrada"""
     # Cria objeto Musica para cada música, salvando o título original do vetor de strings do banco
     # Aqui deve-se haver cuidado para não realizar cópia e utilizar memória descenessariamente
@@ -81,7 +81,7 @@ def cria_objs_musica(musicas: list[list[str]]):
     objsMusicas = []
 
     for indice, titulo in enumerate(musicas):
-        objMusica = Musica(titulo, str_utils.stringsBanco[indice])
+        objMusica = Musica(titulo, stringsBanco[indice])
         objsMusicas.append(objMusica)
 
     return objsMusicas
@@ -122,7 +122,7 @@ if __name__ == "__main__":
     )
 
     # Lista de objetos Musica para armazenar objetos com o score devidamente computado
-    musicas: list[Musica] = cria_objs_musica(stringsBanco)
+    musicas: list[Musica] = cria_objs_musica(stringsBanco, str_utils.stringsBanco)
 
     # Monta árvore trie para buscar por músicas com palavra 'feat'
     raizTrie = trie.TrieNode()
