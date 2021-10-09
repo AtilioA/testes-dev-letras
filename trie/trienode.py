@@ -58,5 +58,12 @@ class TrieNode:
             for palavra in musica.titulo:
                 self.insere(palavra, musica)
 
+    def marca_feats(raizTrie: TrieNode) -> None:
+        """Busca por músicas que contenham a palavra 'feat' e marca seus atributos."""
+
+        musicasComFeat = raizTrie.busca("feat")
+        for musica in musicasComFeat:
+            musica.set_feat(True)
+
     def __str__(self) -> str:
         return f"{self.valor};{self.filhos}"

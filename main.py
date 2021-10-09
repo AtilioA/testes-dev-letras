@@ -127,9 +127,7 @@ if __name__ == "__main__":
     # Monta árvore trie para buscar por músicas com palavra 'feat'
     raizTrie = trie.TrieNode()
     raizTrie.popula_trie_musicas(musicas)
-    musicasComFeat = raizTrie.busca("feat")
-    for musica in musicasComFeat:
-        musica.set_feat(True)
+    raizTrie.marca_feats()
 
     # Faz comparação ingênua
     musicas = busca_musicas(stringEntradaDividida, musicas)
