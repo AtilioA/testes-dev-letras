@@ -3,7 +3,7 @@
 
 
 # Para utilizar type hint com a classe Musica sem causar importação circular
-# Também adiciona compatibilidade com versões de Python abaixo de 3.9 e acima de 3.7
+# Também adiciona compatibilidade com versões de Python abaixo de 3.9 e ao menos 3.7
 from __future__ import annotations
 from typing import TYPE_CHECKING
 
@@ -56,7 +56,8 @@ class TrieNode:
         # Insere cada palavra de cada música na árvore
         for musica in musicas:
             for palavra in musica.titulo:
-                self.insere(palavra, musica)
+                for char in range(len(palavra)):
+                    self.insere(palavra[char:], musica)
 
     def marca_feats(raizTrie: TrieNode) -> None:
         """Busca por músicas que contenham a palavra 'feat' e marca seus atributos."""
