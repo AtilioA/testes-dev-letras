@@ -19,6 +19,21 @@ class TrieNode:
         # Lista de músicas que possuem a palavra soletrada pelas arestas
         self.valor: list[Musica] = []
 
+    def insere(self, chave: str, valor: Musica) -> None:
+        """Insere chave:valor no node."""
+
+        for char in chave:
+            # Se não existir nó para o caractere da chave
+            if char not in self.filhos:
+                # Crie um novo nó
+                self.filhos[char] = TrieNode()
+            # Percorra pelo nó (se não existia antes, agora existe)
+            self = self.filhos[char]
+
+        # Após percorrer toda a árvore através dos caracteres da chave,
+        # adicione o valor no último nó
+        self.valor.append(valor)
+
     def busca(self, chave: str) -> list[Musica]:
         """Busca um valor pela sua chave no node."""
 
@@ -34,21 +49,6 @@ class TrieNode:
         # Após percorrer toda a árvore através dos caracteres da chave,
         # retorn o valor do último nó
         return self.valor
-
-    def insere(self, chave: str, valor: Musica) -> None:
-        """Insere chave:valor no node."""
-
-        for char in chave:
-            # Se não existir nó para o caractere da chave
-            if char not in self.filhos:
-                # Crie um novo nó
-                self.filhos[char] = TrieNode()
-            # Percorra pelo nó (se não existia antes, agora existe)
-            self = self.filhos[char]
-
-        # Após percorrer toda a árvore através dos caracteres da chave,
-        # adicione o valor no último nó
-        self.valor.append(valor)
 
     def popula_trie_musicas(self, musicas: list[Musica]) -> None:
         """Insere músicas de uma lista na árvore."""

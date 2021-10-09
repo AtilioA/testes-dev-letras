@@ -45,10 +45,10 @@ class TestStringMethods(unittest.TestCase):
         )
 
     def test_busca(self):
-        titulo = "ceci n'est une pipe".split()
-        m1 = main.Musica(titulo, "tituloOriginal")
+        titulo1 = "ceci n'est pas une pipe".split()
+        m1 = main.Musica(titulo1, "tituloOriginal")
         raiz = trie.TrieNode()
-        for palavra in titulo:
+        for palavra in titulo1:
             raiz.insere(palavra, m1)
 
         self.assertEqual(raiz.busca("ceci"), [m1])
@@ -67,6 +67,21 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(raiz.busca("pipe"), [m1, m2])
         self.assertNotEqual(raiz.busca("est"), [m1, m2])
         self.assertNotEqual(raiz.busca("n'est"), [m1, m2])
+
+    def test_popula_trie_musicas(self):
+        raiz = trie.TrieNode()
+        musicas = []
+
+        titulo = "ceci n'est pas une pipe".split()
+        musicas.append(main.Musica(titulo, "tituloOriginal"))
+        titulo = "ceci est une pipe".split()
+        musicas.append(main.Musica(titulo, "tituloOriginal"))
+        titulo = "celine dion | my heart will go on".split()
+        musicas.append(main.Musica(titulo, "tituloOriginal"))
+
+        raiz.popula_trie_musicas(musicas)
+        self.assertEqual(raiz.busca("ceci"), [musicas[0], musicas[1]])
+        self.assertEqual(raiz.busca("celine"), [musicas[2]])
 
 
 if __name__ == "__main__":
