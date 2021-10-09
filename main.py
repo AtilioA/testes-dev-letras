@@ -33,19 +33,19 @@ class Musica:
         # Booleano representando caso a música tenha feat
         self.temFeat: bool = None
 
-    def pontua_feat(self, stringBusca: str) -> None:
-        """Checa se string possui feat e retorna pontuação de acordo com lógica estabelecida pelo desafio para a string buscada."""
+    def pontua_feat(self, stringsBusca: list[str]) -> None:
+        """Checa se strings de busca possuem feat e altera pontuação de acordo com lógica estabelecida pelo desafio para a string buscada."""
 
         if self.tem_feat():
-            if stringBusca == "feat":
+            if "feat" in stringsBusca:
                 # Usuário está procurando feat, não desconte ponto
-                return self.adiciona_score(EnumScore["WANT_FEAT"].value)
+                self.adiciona_score(EnumScore["WANT_FEAT"].value)
             else:
                 # Usuário não está procurando feat mas música possui 'feat', desconte ponto
-                return self.adiciona_score(EnumScore["DONT_WANT_FEAT"].value)
+                self.adiciona_score(EnumScore["DONT_WANT_FEAT"].value)
         else:
             # Não há feat, não desconte ponto
-            return self.adiciona_score(EnumScore["NO_FEAT"].value)
+            self.adiciona_score(EnumScore["NO_FEAT"].value)
 
     def __str__(self) -> str:
         """Representação em string do objeto Música, imprimindo título, índice e score."""
@@ -99,8 +99,8 @@ def busca_musicas(stringsBusca: list[str], musicas: list[Musica]) -> list[Musica
                     str_utils.compara_strings_ingenuo(palavraBusca, palavraMusica)
                 )
 
-            # Retira pontos caso apenas a música possua a palavra 'feat'
-            musicas[i].pontua_feat(palavraBusca)
+        # Retira pontos caso apenas a música possua a palavra 'feat'
+        musicas[i].pontua_feat(palavraBusca)
 
     return musicas
 
