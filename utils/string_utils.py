@@ -5,7 +5,6 @@ from __future__ import annotations
 import main
 
 
-
 # Strings de músicas fornecidas pelo desafio
 stringsBanco = [
     "Que Tiro Foi Esse",
@@ -162,7 +161,7 @@ def remove_acentos_string(string: str) -> str:
     return string.translate(__accents_translation_table)
 
 
-def trata_e_divide_strings_banco(stringsMusicas: list[str]):
+def trata_e_divide_strings_banco(stringsMusicas: list[str]) -> list[list[str]]:
     """Trata e divide strings da lista de músicas do banco em uma lista para cada palavra."""
     # Trata strings do banco de músicas da mesma forma que a string de busca
     stringsBancoTratadas = map(trata_string, stringsMusicas)

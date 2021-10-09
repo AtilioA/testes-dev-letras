@@ -62,8 +62,9 @@ class TrieNode:
         """Busca por músicas que contenham a palavra 'feat' e marca seus atributos."""
 
         musicasComFeat = raizTrie.busca("feat")
-        for musica in musicasComFeat:
-            musica.set_feat(True)
+        if musicasComFeat:
+            for musica in musicasComFeat:
+                musica.set_feat(True)
 
     def __str__(self) -> str:
         return f"{self.valor};{self.filhos}"
