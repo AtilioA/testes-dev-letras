@@ -1,7 +1,8 @@
-from enum import Enum
-
 # Adiciona compatibilidade com versões de Python abaixo de 3.9 e acima de 3.7
 from __future__ import annotations
+
+from enum import Enum
+
 
 
 import trie.trienode as trie

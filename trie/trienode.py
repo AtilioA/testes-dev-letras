@@ -5,7 +5,7 @@
 # Para utilizar type hint com a classe Musica sem causar importação circular
 # Também adiciona compatibilidade com versões de Python abaixo de 3.9 e acima de 3.7
 from __future__ import annotations
-from typing import, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 
 if TYPE_CHECKING:
