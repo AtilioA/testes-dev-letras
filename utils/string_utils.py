@@ -160,3 +160,15 @@ def remove_acentos_string(string: str) -> str:
     """Remove apenas acentos de uma string (por ex.: não remove til)."""
 
     return string.translate(__accents_translation_table)
+
+
+def trata_e_divide_strings_banco(stringsMusicas: list[str]):
+    """Trata e divide strings da lista de músicas do banco em uma lista para cada palavra."""
+    # Trata strings do banco de músicas da mesma forma que a string de busca
+    stringsBancoTratadas = map(trata_string, stringsMusicas)
+    # Divide títulos das músicas por espaços para comparar palavra por palavra
+    stringsBancoDivididas: list[list[str]] = list(
+        map(divide_string_por_espaco, stringsBancoTratadas)
+    )
+
+    return stringsBancoDivididas

@@ -4,7 +4,6 @@ from __future__ import annotations
 from enum import Enum
 
 
-
 import trie.trienode as trie
 
 
@@ -73,18 +72,6 @@ class Musica:
         return self.temFeat
 
 
-def trata_e_divide_strings_banco(stringsMusicas: list[str]):
-    """Trata e divide strings da lista de músicas do banco em uma lista para cada palavra."""
-    # Trata strings do banco de músicas da mesma forma que a string de busca
-    stringsBancoTratadas = map(str_utils.trata_string, stringsMusicas)
-    # Divide títulos das músicas por espaços para comparar palavra por palavra
-    stringsBancoDivididas: list[list[str]] = list(
-        map(str_utils.divide_string_por_espaco, stringsBancoTratadas)
-    )
-
-    return stringsBancoDivididas
-
-
 def cria_objs_musica(musicas: list[list[str]]):
     """Cria um objeto Musica para cada lista de string da lista dada como entrada"""
     # Cria objeto Musica para cada música, salvando o título original do vetor de strings do banco
@@ -130,7 +117,9 @@ if __name__ == "__main__":
     stringEntradaDividida: list[str] = stringEntrada.split()
 
     # Lista com títulos das músicas separados por espaço (i.e., dividos em lista de strings)
-    stringsBanco: list[list[str]] = trata_e_divide_strings_banco(str_utils.stringsBanco)
+    stringsBanco: list[list[str]] = str_utils.trata_e_divide_strings_banco(
+        str_utils.stringsBanco
+    )
 
     # Lista de objetos Musica para armazenar objetos com o score devidamente computado
     musicas: list[Musica] = cria_objs_musica(stringsBanco)
