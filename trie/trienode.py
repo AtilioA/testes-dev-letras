@@ -47,3 +47,6 @@ class TrieNode:
         # Após percorrer toda a árvore através dos caracteres da chave,
         # adicione o valor no último nó
         self.valor.append(valor)
+
+    def __str__(self) -> str:
+        return f"{self.valor};{self.filhos}"
