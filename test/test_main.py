@@ -22,10 +22,7 @@ class TestMainFunctions(unittest.TestCase):
 
         musicas = main.busca_musicas(stringEntradaDivida, stringsMusicas)
 
-        musicas.sort(key=lambda musica: musica.score, reverse=True)
-
         self.assertEqual(musicas[0].score, 7)
-
         self.assertEqual(musicas[0].tituloOriginal, "Rockstar feat 21 Savage")
 
         stringEntrada = "Vai malandr"
@@ -34,7 +31,6 @@ class TestMainFunctions(unittest.TestCase):
         # Divide string de busca para comparar palavra por palavra
         stringEntradaDivida: list[str] = stringEntrada.split()
         musicas = main.busca_musicas(stringEntradaDivida, stringsMusicas)
-        musicas.sort(key=lambda musica: musica.score, reverse=True)
 
         self.assertEqual(musicas[0].score, 31)
         self.assertEqual(
@@ -73,7 +69,6 @@ class TestMainFunctions(unittest.TestCase):
         # Divide string de busca para comparar palavra por palavra
         stringEntradaDivida: list[str] = stringEntrada.split()
         musicas = main.busca_musicas(stringEntradaDivida, stringsMusicas)
-        musicas.sort(key=lambda musica: musica.score, reverse=True)
 
         self.assertEqual(musicas[0].score, 16)
         self.assertEqual(musicas[0].tituloOriginal, "Havana")
@@ -112,7 +107,6 @@ class TestMainFunctions(unittest.TestCase):
         raizTrie.marca_feats()
 
         musicas = main.busca_musicas(stringEntradaDivida, stringsMusicas)
-        musicas.sort(key=lambda musica: musica.score, reverse=True)
 
         self.assertEqual(musicas[0].score, 4)
         self.assertEqual(musicas[0].tituloOriginal, "Featuring (feat)")

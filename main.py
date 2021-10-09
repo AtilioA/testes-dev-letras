@@ -88,6 +88,8 @@ def cria_objs_musica(stringsMusicasDivididas: list[list[str]], stringsBanco: lis
 
 
 def busca_musicas(stringsBusca: list[str], musicas: list[Musica]) -> list[Musica]:
+    """Busca músicas com maior score para as strings de busca fornecidas."""
+
     # Percorre todas as músicas do banco de músicas
     for i, musica in enumerate(musicas):
         # Compara cada palavra de busca
@@ -101,6 +103,9 @@ def busca_musicas(stringsBusca: list[str], musicas: list[Musica]) -> list[Musica
 
         # Retira pontos caso apenas a música possua a palavra 'feat'
         musicas[i].pontua_feat(palavraBusca)
+
+    # Ordena músicas por score (decrescente, desempate não importa)
+    musicas.sort(key=lambda musica: musica.score, reverse=True)
 
     return musicas
 
@@ -126,6 +131,7 @@ if __name__ == "__main__":
         stringsBancoDivididas, str_utils.stringsBanco
     )
 
+    # Fazemos os tratamentos acima para evitar retrabalho ao montar a árvore E realizar comparação ingênua:
     # Monta árvore trie para buscar por músicas com palavra 'feat'
     raizTrie = trie.TrieNode()
     raizTrie.popula_trie_musicas(musicas)
@@ -133,9 +139,6 @@ if __name__ == "__main__":
 
     # Faz comparação ingênua
     musicas = busca_musicas(stringEntradaDividida, musicas)
-
-    # Ordena músicas por score (decrescente, desempate não importa)
-    musicas.sort(key=lambda musica: musica.score, reverse=True)
 
     print("#")
     print("# Resultados:")
