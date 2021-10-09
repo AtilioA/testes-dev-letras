@@ -2,20 +2,38 @@ import unittest
 
 import utils.string_utils as str_utils
 import main
+import trie.trienode as trie
 
 
 class TestMainFunctions(unittest.TestCase):
     def test_busca_musicas(self):
-        sE = "21"
-        sM = str_utils.stringsBanco
-        musicas = main.busca_musicas(sE, sM)
+        stringEntrada = "21"
+        # Trata string de busca para ignorar capitalização e acentos
+        stringEntrada = str_utils.trata_string(stringEntrada).strip()
+        # Divide string de busca para comparar palavra por palavra
+        stringEntradaDivida: list[str] = stringEntrada.split()
+
+        stringsMusicas = str_utils.trata_e_divide_strings_banco(str_utils.stringsBanco)
+        stringsMusicas = main.cria_objs_musica(stringsMusicas, str_utils.stringsBanco)
+
+        raizTrie = trie.TrieNode()
+        raizTrie.popula_trie_musicas(stringsMusicas)
+        raizTrie.marca_feats()
+
+        musicas = main.busca_musicas(stringEntradaDivida, stringsMusicas)
+
         musicas.sort(key=lambda musica: musica.score, reverse=True)
 
         self.assertEqual(musicas[0].score, 7)
+
         self.assertEqual(musicas[0].tituloOriginal, "Rockstar feat 21 Savage")
 
-        sE = "Vai malandr"
-        musicas = main.busca_musicas(sE, sM)
+        stringEntrada = "Vai malandr"
+        # Trata string de busca para ignorar capitalização e acentos
+        stringEntrada = str_utils.trata_string(stringEntrada).strip()
+        # Divide string de busca para comparar palavra por palavra
+        stringEntradaDivida: list[str] = stringEntrada.split()
+        musicas = main.busca_musicas(stringEntradaDivida, stringsMusicas)
         musicas.sort(key=lambda musica: musica.score, reverse=True)
 
         self.assertEqual(musicas[0].score, 31)
@@ -45,8 +63,16 @@ class TestMainFunctions(unittest.TestCase):
         self.assertEqual(musicas[9].score, 6)
         self.assertEqual(musicas[9].tituloOriginal, "Paraíso (part. Pabllo Vittar)")
 
-        sE = "Havana"
-        musicas = main.busca_musicas(sE, sM)
+        # Reinicia pontuação de músicas
+        for i, musica in enumerate(musicas):
+            musicas[i].score = 0
+
+        stringEntrada = "Havana"
+        # Trata string de busca para ignorar capitalização e acentos
+        stringEntrada = str_utils.trata_string(stringEntrada).strip()
+        # Divide string de busca para comparar palavra por palavra
+        stringEntradaDivida: list[str] = stringEntrada.split()
+        musicas = main.busca_musicas(stringEntradaDivida, stringsMusicas)
         musicas.sort(key=lambda musica: musica.score, reverse=True)
 
         self.assertEqual(musicas[0].score, 16)
@@ -61,19 +87,31 @@ class TestMainFunctions(unittest.TestCase):
         self.assertEqual(musicas[3].score, 5)
         self.assertEqual(musicas[3].tituloOriginal, "Fica (part. Matheus e Kauan)")
         self.assertEqual(musicas[4].score, 4)
-        self.assertEqual(musicas[4].tituloOriginal, "Me Leva Pra Casa")
+        self.assertEqual(musicas[4].tituloOriginal, "Vidinha de Balada")
         self.assertEqual(musicas[5].score, 4)
-        self.assertEqual(musicas[5].tituloOriginal, "Vidinha de Balada")
+        self.assertEqual(musicas[5].tituloOriginal, "Me Leva Pra Casa")
         self.assertEqual(musicas[6].score, 3)
-        self.assertEqual(musicas[6].tituloOriginal, "Amor da Sua Cama")
+        self.assertEqual(musicas[6].tituloOriginal, "Pesadão (part. Marcelo Falcão)")
         self.assertEqual(musicas[7].score, 3)
-        self.assertEqual(musicas[7].tituloOriginal, "Pesadão (part. Marcelo Falcão)")
+        self.assertEqual(musicas[7].tituloOriginal, "Bom Rapaz (part. Jorge e Mateus)")
         self.assertEqual(musicas[8].score, 3)
-        self.assertEqual(musicas[8].tituloOriginal, "Tem Café (part. MC Hariel)")
+        self.assertEqual(musicas[8].tituloOriginal, "Paraíso (part. Pabllo Vittar)")
 
-        sE = "feat"
-        sM = "Featuring (feat)"
-        musicas = main.busca_musicas(sE, sM)
+        stringEntrada = "feat"
+        # Trata string de busca para ignorar capitalização e acentos
+        stringEntrada = str_utils.trata_string(stringEntrada).strip()
+        # Divide string de busca para comparar palavra por palavra
+        stringEntradaDivida: list[str] = stringEntrada.split()
+
+        stringsMusicasOriginal = ["Featuring (feat)"]
+        stringsMusicas = str_utils.trata_e_divide_strings_banco(stringsMusicasOriginal)
+        stringsMusicas = main.cria_objs_musica(stringsMusicas, stringsMusicasOriginal)
+
+        raizTrie = trie.TrieNode()
+        raizTrie.popula_trie_musicas(stringsMusicas)
+        raizTrie.marca_feats()
+
+        musicas = main.busca_musicas(stringEntradaDivida, stringsMusicas)
         musicas.sort(key=lambda musica: musica.score, reverse=True)
 
         self.assertEqual(musicas[0].score, 4)
