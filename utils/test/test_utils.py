@@ -2,6 +2,7 @@ import unittest
 
 import sys
 
+# Para poder importar módulos
 sys.path.append(sys.path[0] + "/../")
 
 import main

@@ -2,7 +2,9 @@ import unittest
 
 import sys
 
+# Para poder importar módulos
 sys.path.append(sys.path[0] + "/../../")
+
 import main
 import trie.trienode as trie
 import utils.string_utils as str_utils
