@@ -48,5 +48,13 @@ class TrieNode:
         # adicione o valor no último nó
         self.valor.append(valor)
 
+    def popula_trie_musicas(self, musicas: list[Musica]) -> None:
+        """Insere músicas de uma lista na árvore."""
+
+        # Insere cada palavra de cada música na árvore
+        for musica in musicas:
+            for palavra in musica.titulo:
+                self.insere(palavra, musica)
+
     def __str__(self) -> str:
         return f"{self.valor};{self.filhos}"
