@@ -1,6 +1,9 @@
 # Importa enum com valores de crédito/débito de pontuação de acordo com correspondências em strings
 import main
 
+# Adiciona compatibilidade com versões de Python abaixo de 3.9 e acima de 3.7
+from __future__ import annotations
+
 
 # Strings de músicas fornecidas pelo desafio
 stringsBanco = [
